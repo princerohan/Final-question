@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Question</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffccf2;
+            position: relative;
+            overflow: hidden;
+            font-size: 16px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            color: red;
+            font-family: 'Dancing Script', cursive;
+            animation: bounce 1s infinite;
+            text-align: center;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        button {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            background-color: #ff4d4d;
+            border: none;
+            padding: 12px 24px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            width: 80%;
+        }
+
+        button:hover {
+            background-color: #ff3333;
+        }
+
+        /* Particle effect styles */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            animation: particleAnimation 2s linear infinite;
+        }
+
+        @keyframes particleAnimation {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                transform: translateY(-500px) scale(0);
+            }
+        }
+
+        .emoji-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            margin: 0 30px;
+        }
+
+        .emoji {
+            font-size: 3rem;
+        }
+
+        .message {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff4d4d;
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Firework effect styles */
+        .firework {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #ff4d4d;
+            animation: fireworkAnimation 1s forwards;
+        }
+
+        @keyframes fireworkAnimation {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(5);
+                opacity: 0;
+            }
+        }
+
+        /* Media Queries for mobile devices */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .emoji-container {
+                font-size: 2.5rem;
+            }
+
+            button {
+                font-size: 1.2rem;
+                width: 90%;
+            }
+
+            .message {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .emoji-container {
+                font-size: 2rem;
+            }
+
+            button {
+                font-size: 1.1rem;
+                width: 95%;
+            }
+
+            .message {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 id="question">Do you love me?</h1>
+    <div class="emoji-container">
+        <span id="emoji" class="emoji">😶</span>
+    </div>
+    <div class="button-container">
+        <button id="yes-button">Yes</button>
+        <button id="no-button">No</button>
+    </div>
+
+    <div id="message" class="message">
+        I love you too!! Here is a song dedicated for you
+    </div>
+
+    <script>
+        // Particle effect generator
+        function createParticle() {
+            let particle = document.createElement('div');
+            particle.classList.add('particle');
+            document.body.appendChild(particle);
+
+            let x = Math.random() * window.innerWidth;
+            let delay = Math.random() * 5;
+
+            particle.style.left = `${x}px`;
+
+            setTimeout(() => {
+                particle.remove();
+            }, 2000);
+        }
+
+        // Generate particles continuously
+        setInterval(createParticle, 100);
+
+        // Get references to the emoji, buttons, and message elements
+        const emojiFace = document.getElementById('emoji');
+        const yesButton = document.getElementById('yes-button');
+        const noButton = document.getElementById('no-button');
+        const message = document.getElementById('message');
+        const question = document.getElementById('question');
+
+        // Function to change emoji based on button hover
+        function updateEmojiOnHover() {
+            emojiFace.textContent = '😶'; // Default emoji (neutral)
+        }
+
+        yesButton.addEventListener('mouseenter', () => {
+            emojiFace.textContent = '🫣'; // Surprised emoji on "Yes" hover
+        });
+
+        yesButton.addEventListener('mouseleave', updateEmojiOnHover);
+
+        noButton.addEventListener('mouseenter', () => {
+            emojiFace.textContent = '😏'; // Smirking emoji on "No" hover
+        });
+
+        noButton.addEventListener('mouseleave', updateEmojiOnHover);
+
+        // Handle "Yes" button click - Show message and redirect after 4 seconds
+        yesButton.addEventListener('click', () => {
+            // Firework effect
+            triggerFireworks();
+
+            // Show the message
+            message.style.display = 'block';
+
+            // Wait for 4 seconds before redirecting
+            setTimeout(() => {
+                // Redirect to the provided YouTube link
+                window.location.href = "https://www.youtube.com/watch?v=GxldQ9eX2wo";
+            }, 4000); // 4 seconds delay
+        });
+
+        // Function to trigger fireworks effect
+        function triggerFireworks() {
+            for (let i = 0; i < 10; i++) {
+                let firework = document.createElement('div');
+                firework.classList.add('firework');
+                document.body.appendChild(firework);
+
+                let x = Math.random() * window.innerWidth;
+                let y = Math.random() * window.innerHeight;
+
+                firework.style.left = `${x}px`;
+                firework.style.top = `${y}px`;
+
+                let size = Math.random() * 50 + 20;
+                firework.style.width = `${size}px`;
+                firework.style.height = `${size}px`;
+
+                setTimeout(() => {
+                    firework.remove();
+                }, 1000); // Firework animation duration
+            }
+        }
+
+        // Handle "No" button click - Change question and emoji, and revert after another click
+        noButton.addEventListener('click', () => {
+            // Change question to "Are you really sure?"
+            question.textContent = "Last Chance! Do you love me??";
+
+            // Change emoji based on the answer
+            emojiFace.textContent = '😞'; // Sad emoji after "No" click
+
+            // Update buttons to act accordingly after user confirms
+            yesButton.textContent = "Yes";
+            noButton.textContent = "No";
+
+            // Disable the "No" button while it's moving away
+            noButton.style.pointerEvents = 'none'; // Disable clicking
+
+            // Handle mousemove to make the "No" button run away
+            noButton.addEventListener('mousemove', (event) => {
+                const buttonRect = noButton.getBoundingClientRect();
+                const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+                const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+
+                const distanceX = event.clientX - buttonCenterX;
+                const distanceY = event.clientY - buttonCenterY;
+
+                // Move the button away from the cursor
+                const moveDistance = 150; // Increase movement distance for more effect
+                const moveX = distanceX > 0 ? -moveDistance : moveDistance;
+                const moveY = distanceY > 0 ? -moveDistance : moveDistance;
+
+                noButton.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+
+            // Reset button position and re-enable the button after 1 second
+            setTimeout(() => {
+                noButton.style.pointerEvents = 'auto'; // Re-enable clicking
+                noButton.style.transform = 'translate(0, 0)'; // Reset button position
+            }, 1000); // After 1 second
+        });
+    </script>
+</body>
+</html>
